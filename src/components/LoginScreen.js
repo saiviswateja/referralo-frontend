@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { login } from '../api-service/UserService';
+import {loginUser} from './../redux/User/actions';
 import { useStateValue } from '../redux/StateProvider';
+import { useHistory } from "react-router-dom";
 
 function LoginScreen() {
     const [state, dispatch] = useStateValue();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    let history = useHistory();
     useEffect(()=> {
         console.log("in login screen for use effect");
     });
@@ -20,12 +23,19 @@ function LoginScreen() {
         setPassword(event.target.value);
     }
 
-    const submitPressed = (event) => {
+    const submitPressed = async (event) => {
         event.preventDefault();
-        login({
+        let loggedUserDetails = await login({
             "username":username,
             "password":password
         });
+        console.log(loggedUserDetails);
+        dispatch(loginUser(loggedUserDetails));     
+        if(Object.keys(loggedUserDetails).length!=0) {
+            history.push("/home");
+        } else {
+            console.log("tried to login but didn't worked");
+        }
     }   
     return <div className='container'>
                 <form>

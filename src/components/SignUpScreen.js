@@ -1,13 +1,63 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { createUser } from "../api-service/UserService";
 import { useStateValue } from '../redux/StateProvider';
-import { loginUser } from "../redux/User/actions";
+import { useHistory } from "react-router-dom";
 
 function SignUpScreen() {
-    const [{},dispatch] = useStateValue();
+    const [state, dispatch] = useStateValue();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [name, setName] = useState("");
+    const [workingCompany, setWorkingCompany] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    let history = useHistory();
+
     useEffect(()=>{
-        console.log("it started");
-        dispatch(loginUser("test"));
+        
     });
+
+    const onChangeEmailHandler = (event) => {
+        setEmail(event.target.value);
+    }
+
+    const onChangePasswordHandler = (event) => {
+        setPassword(event.target.value);
+    }
+
+    const onChangeConfirmPasswordHandler = (event) => {
+    setConfirmPassword(event.target.value);
+    }
+
+    const onChangeNameHandler = (event) => {
+        setName(event.target.value);
+    }
+
+    const onChangeWorkingCompanyHandler = (event) => {
+    setWorkingCompany(event.target.value);
+    }
+
+    const onChangePhoneNumberHandler = (event) => {
+        setPhoneNumber(event.target.value);
+    }
+    
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+        console.log("It came here");
+        createUser({
+            email,
+            name,
+            password,
+            workingCompany,
+            phoneNumber
+        }).then(res=>{
+            console.log(res.data);
+            history.push("/login");  
+        })
+        .catch(err=> {
+            alert("Error creating user please try after some time");
+        })
+    }
     return (
         <div className="container">
         <form>
@@ -18,11 +68,13 @@ function SignUpScreen() {
                 type="text"
                 className="form-control"
                 placeholder="First name"
+                value={name} onChange={onChangeNameHandler}
             />
             </div>
             <div className="form-group">
             <label>Company</label>
-            <input type="text" className="form-control" placeholder="Company" />
+            <input type="text" className="form-control" placeholder="Company" 
+            value={workingCompany} onChange={onChangeWorkingCompanyHandler}/>
             </div>
             <div className="form-group">
             <label>Email address</label>
@@ -30,6 +82,7 @@ function SignUpScreen() {
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
+                value={email} onChange={onChangeEmailHandler}
             />
             </div>
             <div className="form-group">
@@ -38,6 +91,7 @@ function SignUpScreen() {
                 type="password"
                 className="form-control"
                 placeholder="Enter password"
+                value={password} onChange={onChangePasswordHandler}
             />
             </div>
             <div className="form-group">
@@ -46,6 +100,7 @@ function SignUpScreen() {
                 type="password"
                 className="form-control"
                 placeholder="Enter password"
+                value={confirmPassword} onChange={onChangeConfirmPasswordHandler}
             />
             </div>
             <div className="form-group">
@@ -54,9 +109,10 @@ function SignUpScreen() {
                 type="password"
                 className="form-control"
                 placeholder="Enter mobile number"
+                value={phoneNumber} onChange={onChangePhoneNumberHandler}
             />
             </div>
-            <button type="submit" className="btn btn-primary btn-block">
+            <button type="submit" className="btn btn-primary btn-block" onClick={onSubmitHandler}>
             Sign Up
             </button>
             <p className="forgot-password text-right">

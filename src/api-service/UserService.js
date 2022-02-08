@@ -1,14 +1,33 @@
 import axios from 'axios';
 
 export const login = (loginInformation) => {
-    console.log("in login function");
-    axios.post("http://localhost:8089/api/user/login", loginInformation,)
+    return new Promise((resolve, reject)=>{
+        axios.post("http://localhost:8089/api/user/login", loginInformation)
         .then((res)=>{
-            console.log("user login")
-            console.log(res.data); 
+            console.log("tried to get login");
+            console.log(res.data);
+            resolve(res.data);
         })
         .catch((err)=>{
-            console.log("login failed");
-            console.log(err);
+            console.log(err.response);
+            alert(err.response.data.message);
+            reject({})
+        });
+    });
+}
+
+export const createUser = (userInformation) => {
+    return new Promise((resolve, reject)=>{
+        axios.post("http://localhost:8089/api/user", userInformation)
+        .then((res)=>{
+            console.log("tried to save user");
+            console.log(res.data);
+            resolve(res.data);
         })
+        .catch((err)=>{
+            console.log(err.response);
+            alert(err.response.data.message);
+            reject({})
+        });
+    });
 }

@@ -1,9 +1,10 @@
+import { login } from "../../api-service/UserService";
 import { LOGIN_USER, REGISTER_USER } from "./types";
 
 function userReducer(state = null, action) {
     switch(action.type) {
         case LOGIN_USER:
-            console.log("In logging user");
+            state = action.payload
             return state;
         case REGISTER_USER:
             console.log("In registering user");

@@ -8,7 +8,7 @@ function UserBox() {
             <span>Welcome</span>
             <h1>Viswa Teja</h1> 
         </div>
-        <button type="button" class="btn btn-primary">Edit Profile</button>
+        <button type="button" className="btn btn-primary">Edit Profile</button>
     </div>       
 
   </div>;

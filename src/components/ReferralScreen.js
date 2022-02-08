@@ -5,12 +5,12 @@ function ReferralScreen() {
     <div className="container referral-container">
       <div className="row">
         <div className="card referral-card">
-          <div class="card-body">
+          <div className="card-body">
             <div className="d-flex flex-column">
               <div className="d-flex justify-content-between">
-                <h5 class="card-title">Java Full Stack Developer</h5>
+                <h5 className="card-title">Java Full Stack Developer</h5>
                 <h5>Referral by</h5>
-                <p class="card-text">Company Name: Infosys</p>
+                <p className="card-text">Company Name: Infosys</p>
               </div>
               <div className="d-flex justify-content-between">
                 <div>
@@ -21,7 +21,7 @@ function ReferralScreen() {
                 <h4>Sree Rama Sai viswa Teja</h4>
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                 >
