@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { createUser } from "../api-service/UserService";
 import { useStateValue } from '../redux/StateProvider';
 import { useHistory } from "react-router-dom";
+import { getCompanies } from "../api-service/CompanyService";
+import { setCompanies } from "../redux/Company/actions";
 
 function SignUpScreen() {
     const [state, dispatch] = useStateValue();
@@ -11,11 +13,20 @@ function SignUpScreen() {
     const [name, setName] = useState("");
     const [workingCompany, setWorkingCompany] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [companiesList, setCompaniesList] = useState([]);
     let history = useHistory();
 
     useEffect(()=>{
-        
-    });
+        async function fetchCompanies () {
+            let companiesList = await getCompanies();
+            console.log(companiesList);
+            dispatch(setCompanies(companiesList));
+            setCompaniesList(companiesList);
+            console.log(state);
+        }
+        //https://codepen.io/mansour/pen/JorKOx for input box along with input box
+        fetchCompanies();
+    }, []);
 
     const onChangeEmailHandler = (event) => {
         setEmail(event.target.value);
@@ -34,7 +45,8 @@ function SignUpScreen() {
     }
 
     const onChangeWorkingCompanyHandler = (event) => {
-    setWorkingCompany(event.target.value);
+        console.log(event.target.value);
+        setWorkingCompany(event.target.value);
     }
 
     const onChangePhoneNumberHandler = (event) => {
@@ -51,6 +63,7 @@ function SignUpScreen() {
             workingCompany,
             phoneNumber
         }).then(res=>{
+            console.log(res);
             console.log(res.data);
             history.push("/login");  
         })
@@ -73,8 +86,14 @@ function SignUpScreen() {
             </div>
             <div className="form-group">
             <label>Company</label>
-            <input type="text" className="form-control" placeholder="Company" 
-            value={workingCompany} onChange={onChangeWorkingCompanyHandler}/>
+            <select className="form-select" onChange={onChangeWorkingCompanyHandler}>
+                <option selected>Open this select menu</option>
+                {
+                    companiesList.map((company) => {
+                        return  <option key={company.id} value={company.name}>{company.name}</option>
+                    })
+                }
+            </select>
             </div>
             <div className="form-group">
             <label>Email address</label>

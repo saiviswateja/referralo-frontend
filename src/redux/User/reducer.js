@@ -1,4 +1,3 @@
-import { login } from "../../api-service/UserService";
 import { LOGIN_USER, REGISTER_USER } from "./types";
 
 function userReducer(state = null, action) {
