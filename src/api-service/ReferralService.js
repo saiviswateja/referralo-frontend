@@ -15,3 +15,19 @@ export const createReferral = (referralInfomation) => {
         });
     });
 }
+
+export const getReferrals = () => {
+    return new Promise((resolve, reject)=>{
+        axios.get("http://localhost:8089/api/referral/list")
+        .then((res)=>{
+            console.log("tried to get referrals");
+            console.log(res.data);
+            resolve(res.data);
+        })
+        .catch((err)=>{
+            console.log(err.response);
+            alert(err.response.data.message);
+            reject({})
+        });
+    });
+}
