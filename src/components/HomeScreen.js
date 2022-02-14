@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import UserBox from "./UserBox";
 import FilterBox from "./FilterBox";
 import ReferralsCountBox from "./ReferralsCountBox";
+import { useStateValue } from "../redux/StateProvider";
+import { getUserById } from "../api-service/UserService";
 
-function HomeScreen() {
+function HomeScreen(props) {
+ 
   return (
     <div className="contianer">
       <div className="row homerow">
-        <div className="col homebox h-100" style={{backgroundColor:"red"}}><UserBox/></div>
-        <div className="col homebox h-100"  style={{backgroundColor:"purple"}}><FilterBox/></div>
-        <div className="col homebox h-100" style={{backgroundColor:"orange"}}><ReferralsCountBox/></div>
+        <div className="col homebox h-100 userbox"><UserBox user={props.user}/></div>
+        <div className="col homebox h-100 filterbox"><FilterBox/></div>
+        <div className="col homebox h-100 referralCountBox"><ReferralsCountBox/></div>
       </div>
     </div>
   );

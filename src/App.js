@@ -7,11 +7,11 @@ import {
   Link
 } from "react-router-dom";
 import Home from './components/Home';
-import AddEditUser from './components/AddEditUser';
 import ReferralJob from './components/ReferralJob';
 import ViewReferralJob from './components/ViewReferralJob';
 import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
+import EditProfile from './components/EditProfile';
 
 function App() {
   return (
@@ -21,13 +21,10 @@ function App() {
           <Route exact path="/home">
             <Home/>
           </Route>
-          <Route exact path="/user">
-            <AddEditUser/>
-          </Route>
           <Route exact path="/referral/add">
             <ReferralJob/>
           </Route>
-          <Route exact path="/referral/view">
+          <Route exact path="/referral/view/:referral_id">
             <ViewReferralJob/>
           </Route>
           <Route exact path="/login">
@@ -35,7 +32,10 @@ function App() {
           </Route>
           <Route exact path="/signup">
             <SignUpScreen/>
-        </Route>
+          </Route>
+          <Route exact path="/user/edit/:user_id">
+            <EditProfile/>
+          </Route>
       </Switch>
     </Router>
   );

@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { getReferrals } from "../api-service/ReferralService";
+import { getReferralsExceptUserId } from "../api-service/ReferralService";
+import {Link} from 'react-router-dom';
+import { useStateValue } from "../redux/StateProvider";
 
-function ReferralScreen() {
+function ReferralScreen(props) {
+  const [state, dispatch] = useStateValue();
+  const linkStyle = {
+    margin: "1rem",
+    textDecoration: "none",
+    color: 'white'
+  };
+  
   const [referrals, setReferrals] = useState([]);
   useEffect(()=> {
-      async function fetchReferrals () {
-          let retrunedReferrals = await getReferrals();
+    console.log("came here in referral screen");
+    console.log(props);
+      async function fetchReferrals (id) {
+          let retrunedReferrals = await getReferralsExceptUserId(id);
           setReferrals(retrunedReferrals);
       } 
-      fetchReferrals();
-  }, [])
+      props && props.user && props.user.id && fetchReferrals(props.user.id);
+  }, []);
+
   return (
     <div className="container referral-container">
       <div className="row">
@@ -19,25 +31,26 @@ function ReferralScreen() {
             <div className="card-body">
               <div className="d-flex flex-column">
                 <div className="d-flex justify-content-between">
-                  <h5 className="card-title">{referral.role}</h5>
+                  <h4 className="card-title">{referral.role}</h4>
                   <h5>Referral by</h5>
-                  <p className="card-text">Company Name: {referral.company.name}</p>
+                  <h4 className="card-text">{referral.company.name}</h4>
                 </div>
                 <div className="d-flex justify-content-between">
                   <div>
-                    <span>Experience </span>
-                    <strong>{referral.minExperience} - {referral.maxExperience}</strong>
-                    <strong></strong>
+                    <h5>Experience </h5>
+                    <h4>{referral.minExperience} - {referral.maxExperience}</h4>
                   </div>
-                  <h4></h4>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    View Details
-                  </button>
+                  <h4>{referral.user.name}</h4>
+                  <Link to={`/referral/view/${referral.id}`}  style={linkStyle}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                        <span>View Details</span>
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -24,7 +24,6 @@ function SignUpScreen() {
             setCompaniesList(companiesList);
             console.log(state);
         }
-        //https://codepen.io/mansour/pen/JorKOx for input box along with input box
         fetchCompanies();
     }, []);
 
