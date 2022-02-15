@@ -12,21 +12,19 @@ function ReferralScreen(props) {
   };
   
   const [referrals, setReferrals] = useState([]);
-  useEffect(()=> {
-    console.log("came here in referral screen");
+  useEffect(()=>{
     console.log(props);
-      async function fetchReferrals (id) {
-          let retrunedReferrals = await getReferralsExceptUserId(id);
-          setReferrals(retrunedReferrals);
-      } 
-      props && props.user && props.user.id && fetchReferrals(props.user.id);
+  });
+
+  useEffect(()=> {
+    
   }, []);
 
   return (
     <div className="container referral-container">
       <div className="row">
         {
-          referrals.map(referral => {
+          props.referrals.map(referral => {
             return <div className="card referral-card" key={referral.id}>
             <div className="card-body">
               <div className="d-flex flex-column">
@@ -48,7 +46,10 @@ function ReferralScreen(props) {
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >
-                        <span>View Details</span>
+                        {
+                          props.showUserReferrals ? <span>View Details</span> : <span>Edit Details</span>
+                        }
+                        
                     </button>
                   </Link>
                 </div>

@@ -12,7 +12,7 @@ function HomeScreen(props) {
       <div className="row homerow">
         <div className="col homebox h-100 userbox"><UserBox user={props.user}/></div>
         <div className="col homebox h-100 filterbox"><FilterBox/></div>
-        <div className="col homebox h-100 referralCountBox"><ReferralsCountBox/></div>
+        <div className="col homebox h-100 referralCountBox"><ReferralsCountBox handleToggle={props.handleToggle} showUserReferrals={props.showUserReferrals}/></div>
       </div>
     </div>
   );

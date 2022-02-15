@@ -170,3 +170,8 @@ body, html, .App, #root, .auth-wrapper {
 .userbox_parent button span {
   color: #2b6777;
 }
+
+.referral_count_box_text {
+  color: #2b6777;
+  font-weight: bold;
+}
