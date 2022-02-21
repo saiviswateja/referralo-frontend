@@ -39,19 +39,31 @@ function ReferralScreen(props) {
                     <h4>{referral.minExperience} - {referral.maxExperience}</h4>
                   </div>
                   <h4>{referral.user.name}</h4>
-                  <Link to={`/referral/view/${referral.id}`}  style={linkStyle}>
+                  {
+                    !props.showUserReferrals ?
+                    <Link to={`/referral/view/${referral.id}`}  style={linkStyle}>
                     <button
                       type="button"
                       className="btn btn-primary"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >
-                        {
-                          props.showUserReferrals ? <span>View Details</span> : <span>Edit Details</span>
-                        }
+                        <span>Add Details</span>
                         
                     </button>
+                  </Link> 
+                    :
+                    <Link to={`/referral/edit/${referral.id}`}  style={linkStyle}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                        <span>Edit Details</span>
+                    </button>
                   </Link>
+                  }
                 </div>
               </div>
             </div>

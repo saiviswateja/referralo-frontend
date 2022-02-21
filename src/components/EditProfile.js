@@ -1,21 +1,73 @@
 import React, { useEffect, useState } from "react";
-import { createUser, getUserById } from "../api-service/UserService";
+import { createUser, getUserById, updateUser } from "../api-service/UserService";
 import { useStateValue } from "../redux/StateProvider";
 import { useParams } from "react-router-dom";
+import { getCompanies } from "../api-service/CompanyService";
 
 function EditProfile() {
   let { user_id } = useParams();
   const [state, dispatch] = useStateValue();
   const [user, setUser] = useState({});
+  const [email, setEmail] =  useState("");
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [changedCompany, setChangedCompanyName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(""); 
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
     async function getReferral() {
       let userDetails = await getUserById(user_id);
       setUser(userDetails);
-      console.log(userDetails);
+      setEmail(userDetails.email);
+      setName(userDetails.name);
+      setCompany(userDetails.workingCompany);
+      setChangedCompanyName(userDetails.workingCompany);
+      setPhoneNumber(userDetails.phoneNumber);
+    }
+    async function fetchCompanies() {
+      let companies = await getCompanies();
+      setCompanies(companies);
     }
     getReferral();
+    fetchCompanies();
+    console.log(company);
   }, []);
+
+  const onChangeEmailHandler = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onChangeNameHandler = (event) => {
+    setName(event.target.value);
+  };
+
+  const onChangePhoneNumberHandler = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+
+  const onChangeCompanyNameHandler = event => {
+    setChangedCompanyName(event.target.value);
+  }
+
+  const onSubmitHandler = event => {
+    let userInformation = {
+      id:user_id,
+      email: email,
+      name: name,
+      workingCompany: changedCompany,
+      phoneNumber: phoneNumber
+    }
+    console.log(userInformation);
+    updateUser(userInformation)
+      .then(res=>{
+        console.log("user data pdated");
+      })
+      .catch(err=>{
+        console.log("error occureed");
+        console.log(err.data);
+      })
+  }
 
   return (
     <div className="container">
@@ -30,7 +82,8 @@ function EditProfile() {
               type="text"
               className="form-control"
               id="inputPassword"
-              value={user.email}
+              value={email}
+              onChange={onChangeEmailHandler}
             />
           </div>
         </div>
@@ -43,7 +96,8 @@ function EditProfile() {
               type="text"
               className="form-control"
               id="inputPassword"
-              value={user.name}
+              value={name}
+              onChange={onChangeNameHandler}
             />
           </div>
         </div>
@@ -52,12 +106,16 @@ function EditProfile() {
             Current Company
           </label>
           <div className="col-sm-10">
-            <input
-              type="text"
-              className="form-control"
-              id="inputPassword"
-              value={user.workingCompany || ""}
-            />
+            <select className="form-select" onChange={onChangeCompanyNameHandler}>
+            <option selected value={company}>{company}</option>  
+            {companies.map((company) => {
+                return (
+                  <option key={company.id} value={company.name}>
+                    {company.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
         <div className="mb-3 row">
@@ -69,13 +127,14 @@ function EditProfile() {
               type="text"
               className="form-control"
               id="inputPassword"
-              value={user.phoneNumber || ""}
+              value={phoneNumber}
+              onChange={onChangePhoneNumberHandler}
             />
           </div>
         </div>
         <div className="row mt-5">
           <div className="d-flex">
-            <button className="btn btn-primary">Save Details</button>
+            <button className="btn btn-primary" onClick={onSubmitHandler}>Save Details</button>
           </div>
         </div>
       </div>

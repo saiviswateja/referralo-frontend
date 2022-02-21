@@ -107,6 +107,9 @@ function ReferralJob() {
       company: {
         id: companyId,
       },
+      user: {
+        id: user.id
+      },
       referralCode: referralCode,
       skills: skills,
     };
@@ -117,7 +120,7 @@ function ReferralJob() {
         console.log(res.data);
       })
       .catch((err) => {
-        alert("Error creating user please try after some time");
+        alert("Error creating referral please try after some time");
       });
   };
 

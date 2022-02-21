@@ -16,6 +16,22 @@ export const createReferral = (referralInfomation) => {
     });
 }
 
+export const updateReferral = (referralInfomation) => {
+    return new Promise((resolve, reject)=>{
+        axios.put("http://localhost:8089/api/referral/update", referralInfomation)
+        .then((res)=>{
+            console.log("tried to update referral");
+            console.log(res.data);
+            resolve(res.data);
+        })
+        .catch((err)=>{
+            console.log(err.response);
+            alert(err.response.data.message);
+            reject({})
+        });
+    });
+}
+
 export const getReferrals = () => {
     return new Promise((resolve, reject)=>{
         axios.get("http://localhost:8089/api/referral/list")

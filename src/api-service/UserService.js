@@ -32,6 +32,21 @@ export const createUser = (userInformation) => {
     });
 }
 
+export const updateUser = (userInformation) => {
+    return new Promise((resolve, reject)=>{
+        axios.put("http://localhost:8089/api/user/update", userInformation)
+        .then((res)=>{
+            console.log("tried to update user");
+            resolve(res.data);
+        })
+        .catch((err)=>{
+            console.log(err.response);
+            alert(err.response.data.message);
+            reject({})
+        });
+    });
+}
+
 export const getUserById = (userId) => {
     return new Promise((resolve, reject)=>{
         console.log(userId);
