@@ -13,6 +13,7 @@ import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
 import EditProfile from './components/EditProfile';
 import EditReferralJob from './components/EditReferralJob';
+import HomePage from './components/HomePage';
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route exact path="/referral/edit/:referral_id">
             <EditReferralJob/>
+          </Route>
+          <Route exact path="/">
+            <HomePage/>
           </Route>
       </Switch>
     </Router>
