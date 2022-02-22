@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { createUser, getUserById, updateUser } from "../api-service/UserService";
+import { useHistory } from "react-router-dom";
+import {
+  createUser,
+  getUserById,
+  updateUser,
+} from "../api-service/UserService";
 import { useStateValue } from "../redux/StateProvider";
 import { useParams } from "react-router-dom";
 import { getCompanies } from "../api-service/CompanyService";
+import {setUser} from '../redux/User/actions';
 
 function EditProfile() {
   let { user_id } = useParams();
   const [state, dispatch] = useStateValue();
-  const [user, setUser] = useState({});
-  const [email, setEmail] =  useState("");
+  const [userData, setUserData] = useState({});
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [changedCompany, setChangedCompanyName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(""); 
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [companies, setCompanies] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     async function getReferral() {
       let userDetails = await getUserById(user_id);
-      setUser(userDetails);
+      setUserData(userDetails);
       setEmail(userDetails.email);
       setName(userDetails.name);
       setCompany(userDetails.workingCompany);
@@ -46,28 +53,30 @@ function EditProfile() {
     setPhoneNumber(event.target.value);
   };
 
-  const onChangeCompanyNameHandler = event => {
+  const onChangeCompanyNameHandler = (event) => {
     setChangedCompanyName(event.target.value);
-  }
+  };
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     let userInformation = {
-      id:user_id,
+      id: user_id,
       email: email,
       name: name,
       workingCompany: changedCompany,
-      phoneNumber: phoneNumber
-    }
+      phoneNumber: phoneNumber,
+    };
     console.log(userInformation);
     updateUser(userInformation)
-      .then(res=>{
+      .then((res) => {
         console.log("user data pdated");
+        dispatch(setUser(userInformation));
+        history.push("/home");
       })
-      .catch(err=>{
+      .catch((err) => {
         console.log("error occureed");
         console.log(err.data);
-      })
-  }
+      });
+  };
 
   return (
     <div className="container">
@@ -106,9 +115,14 @@ function EditProfile() {
             Current Company
           </label>
           <div className="col-sm-10">
-            <select className="form-select" onChange={onChangeCompanyNameHandler}>
-            <option selected value={company}>{company}</option>  
-            {companies.map((company) => {
+            <select
+              className="form-select"
+              onChange={onChangeCompanyNameHandler}
+            >
+              <option selected value={company}>
+                {company}
+              </option>
+              {companies.map((company) => {
                 return (
                   <option key={company.id} value={company.name}>
                     {company.name}
@@ -134,7 +148,9 @@ function EditProfile() {
         </div>
         <div className="row mt-5">
           <div className="d-flex">
-            <button className="btn btn-primary" onClick={onSubmitHandler}>Save Details</button>
+            <button className="btn btn-primary" onClick={onSubmitHandler}>
+              Save Details
+            </button>
           </div>
         </div>
       </div>
