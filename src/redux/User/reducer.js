@@ -1,4 +1,3 @@
-import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
 import { LOGIN_USER, REGISTER_USER, SET_USER } from "./types";
 
 function userReducer(state = null, action) {

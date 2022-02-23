@@ -82,7 +82,6 @@ export const getReferralsByUserId = (id) => {
 }
 
 export const getReferralsExceptUserId = (id) => {
-    console.log("the id of the current user is " + id);
     return new Promise((resolve, reject)=>{
         axios.get("http://localhost:8089/api/referral/except/"+id)
         .then((res)=>{

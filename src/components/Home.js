@@ -10,10 +10,6 @@ function Home() {
   const [referrals, setReferrals] = useState([]);
   const [showUserReferrals, setShowUserReferrals] = useState(false);
   useEffect(()=> {
-    console.log("home came");
-    console.log(state);
-  })
-  useEffect(()=> {
     async function fetchReferrals (id) {
         console.log(showUserReferrals);
         let retrunedReferrals = showUserReferrals ? await getReferralsByUserId(id) : await getReferralsExceptUserId(id);

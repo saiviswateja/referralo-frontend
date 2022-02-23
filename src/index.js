@@ -5,8 +5,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StateProvider } from './redux/StateProvider';
 import RootReducer from './redux/RootReducer';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const intialState = {};
+
+axios.interceptors.request.use(
+  (req) => {
+    const cookies = new Cookies();
+    let accessToken = cookies.get("token");
+    req.headers.Authorization = "Bearer " + accessToken;
+    console.log(req);
+    return req;
+  },
+  (err) => {
+    console.log("came here bro");
+     return Promise.reject(err);
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>

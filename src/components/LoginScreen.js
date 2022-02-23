@@ -3,34 +3,31 @@ import { login } from '../api-service/UserService';
 import {loginUser} from './../redux/User/actions';
 import { useStateValue } from '../redux/StateProvider';
 import { useHistory } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 function LoginScreen() {
     const [state, dispatch] = useStateValue();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory();
-    useEffect(()=> {
-        console.log("in login screen for use effect");
-    });
+    const cookies = new Cookies();
 
     const onChangeUsernameHandler = (event) => {
-        console.log("entered on onchange handler");
         setUsername(event.target.value);
     }
 
     const onChangePasswordHandler = (event) => {
-        console.log("entered on onchange handler");
         setPassword(event.target.value);
     }
 
     const submitPressed = async (event) => {
         event.preventDefault();
         let loggedUserDetails = await login({
-            "username":username,
+            "userName":username,
             "password":password
         });
-        console.log(loggedUserDetails);
         dispatch(loginUser(loggedUserDetails));     
+        cookies.set("token", loggedUserDetails.accessToken);
         if(Object.keys(loggedUserDetails).length!=0) {
             history.push("/home");
         } else {
