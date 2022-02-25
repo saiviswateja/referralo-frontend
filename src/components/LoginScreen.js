@@ -4,13 +4,25 @@ import {loginUser} from './../redux/User/actions';
 import { useStateValue } from '../redux/StateProvider';
 import { useHistory } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import { signOut } from '../helpers/utils';
 
 function LoginScreen() {
     const [state, dispatch] = useStateValue();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory();
-    const cookies = new Cookies();
+    const cookie = new Cookies();
+
+    useState(()=> {
+        let userDetails = cookie.get('loggedUser');
+        let accessToken = cookie.get('token');
+        if (userDetails!=null && accessToken!=null) {
+            history.push("/home");
+        } else if(userDetails!=null || accessToken!=null) {
+            cookie.remove("token");
+            cookie.remove("loggedUser");
+        }
+    })
 
     const onChangeUsernameHandler = (event) => {
         setUsername(event.target.value);
@@ -27,8 +39,8 @@ function LoginScreen() {
             "password":password
         });
         dispatch(loginUser(loggedUserDetails));     
-        cookies.set("token", loggedUserDetails.accessToken);
-        cookies.set("loggedUser", loggedUserDetails);
+        cookie.set("token", loggedUserDetails.accessToken);
+        cookie.set("loggedUser", loggedUserDetails);
         if(Object.keys(loggedUserDetails).length!=0) {
             history.push("/home");
         } else {
