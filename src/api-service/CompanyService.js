@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const uninterceptedAxiosInstance = axios.create();
+
 export const getCompanies = () => {
     return new Promise((resolve, reject)=>{
-        axios.get("http://localhost:8089/api/company")
+        uninterceptedAxiosInstance.get("http://localhost:8089/api/company")
         .then((res)=>{
             console.log("tried to get companies");
             console.log(res.data);

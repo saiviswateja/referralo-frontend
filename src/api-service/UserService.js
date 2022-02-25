@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+const uninterceptedAxiosInstance = axios.create();
+
 export const login = (loginInformation) => {
     return new Promise((resolve, reject)=>{
         console.log(loginInformation);
-        const uninterceptedAxiosInstance = axios.create();
         uninterceptedAxiosInstance.post("http://localhost:8089/authenticate", loginInformation)
         .then((res)=>{
             console.log("tried to authenticate");
@@ -20,7 +21,7 @@ export const login = (loginInformation) => {
 
 export const createUser = (userInformation) => {
     return new Promise((resolve, reject)=>{
-        axios.post("http://localhost:8089/api/user", userInformation)
+        uninterceptedAxiosInstance.post("http://localhost:8089/api/user", userInformation)
         .then((res)=>{
             console.log("tried to save user");
             console.log(res.data);
