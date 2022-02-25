@@ -6,7 +6,7 @@ function UserBox(props) {
   const history = useHistory();
   useEffect(()=> {
       if(props.user==null) {
-        history.push("/login");
+        
       }
   });
   const onSubmitHandler = (event) => {

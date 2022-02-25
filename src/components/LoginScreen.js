@@ -28,6 +28,7 @@ function LoginScreen() {
         });
         dispatch(loginUser(loggedUserDetails));     
         cookies.set("token", loggedUserDetails.accessToken);
+        cookies.set("loggedUser", loggedUserDetails);
         if(Object.keys(loggedUserDetails).length!=0) {
             history.push("/home");
         } else {
