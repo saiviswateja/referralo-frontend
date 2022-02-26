@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
-import { getReferralById, updateReferral } from "../api-service/ReferralService";
+import { getReferralById, getReferralByIdForEdit, updateReferral } from "../api-service/ReferralService";
 import { getCompanies } from "../api-service/CompanyService";
 import { getSkills } from "../api-service/SkillService";
 import { useStateValue } from "../redux/StateProvider";
+import {getLoggeduser, signOut} from '../helpers/utils';
 import { setSkills } from "../redux/Skill/actions";
 
 function EditReferralJob() {
@@ -30,7 +31,7 @@ function EditReferralJob() {
 
   useEffect(() => {
     async function getReferral() {
-      let details = await getReferralById(referral_id);
+      let details = await getReferralByIdForEdit(referral_id);
       setReferralDetails(details);
       setCompanyDetails(details.company);
       setSkillsOfReferral(details.skills);
@@ -55,6 +56,13 @@ function EditReferralJob() {
       setSkillDetails(skillsList);
       dispatch(setSkills(skillsList));
     }
+    getLoggeduser().then((user)=> {
+      if(user==null) {
+        signOut();
+        return;
+      }
+      getReferral();
+    });
     getReferral();
     fetchCompanies();
     if (state.skills == null) {

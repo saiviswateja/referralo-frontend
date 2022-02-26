@@ -38,7 +38,7 @@ function App() {
           <Route exact path="/user/edit/:user_id">
             <EditProfile/>
           </Route>
-          <Route exact path="/referral/edit/:referral_id">
+          <Route exact path="/referral/edit/:user_id/:referral_id">
             <EditReferralJob/>
           </Route>
           <Route exact path="/">

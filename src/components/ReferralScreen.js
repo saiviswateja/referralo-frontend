@@ -53,7 +53,7 @@ function ReferralScreen(props) {
                           </button>
                         </Link>
                         :
-                        <Link to={`/referral/edit/${referral.id}`} style={linkStyle}>
+                        <Link to={`/referral/edit/${props.user.id}/${referral.id}`} style={linkStyle}>
                           <button
                             type="button"
                             className="btn btn-primary"

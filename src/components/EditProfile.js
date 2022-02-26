@@ -9,6 +9,7 @@ import { useStateValue } from "../redux/StateProvider";
 import { useParams } from "react-router-dom";
 import { getCompanies } from "../api-service/CompanyService";
 import {setUser} from '../redux/User/actions';
+import {getLoggeduser, signOut} from '../helpers/utils';
 
 function EditProfile() {
   let { user_id } = useParams();
@@ -36,7 +37,13 @@ function EditProfile() {
       let companies = await getCompanies();
       setCompanies(companies);
     }
-    getReferral();
+    getLoggeduser().then((user)=> {
+      if(user==null) {
+        signOut();
+        return;
+      }
+      getReferral();
+    });
     fetchCompanies();
     console.log(company);
   }, []);

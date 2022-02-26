@@ -64,6 +64,22 @@ export const getReferralById = (id) => {
     });
 }
 
+export const getReferralByIdForEdit = (referralId, userId) => {
+    return new Promise((resolve, reject)=>{
+        axios.get("http://localhost:8089/api/referral/edit/"+referralId+"/"+userId)
+        .then((res)=>{
+            console.log("tried to get referrals");
+            console.log(res.data);
+            resolve(res.data);
+        })
+        .catch((err)=>{
+            console.log(err.response);
+            alert(err.response.data.message);
+            reject({})
+        });
+    });
+}
+
 export const getReferralsByUserId = (id) => {
     return new Promise((resolve, reject)=>{
         console.log(id);
