@@ -7,3 +7,14 @@ export const signOut = () => {
         window.location = '/login';
     });
 }
+
+export const getLoggeduser = () => {
+    return new Promise((resolve, reject) => {
+        let user = cookie.get("loggedUser");
+        if(user!=null) {
+            resolve(user);
+        } else {
+            resolve(null);
+        }
+    })
+}

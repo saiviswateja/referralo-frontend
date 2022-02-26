@@ -38,13 +38,14 @@ function LoginScreen() {
             "userName":username,
             "password":password
         });
-        dispatch(loginUser(loggedUserDetails));     
-        cookie.set("token", loggedUserDetails.accessToken);
-        cookie.set("loggedUser", loggedUserDetails);
-        if(Object.keys(loggedUserDetails).length!=0) {
+        
+        if(loggedUserDetails.id!=null) {
+            dispatch(loginUser(loggedUserDetails));     
+            cookie.set("token", loggedUserDetails.accessToken);
+            cookie.set("loggedUser", loggedUserDetails);
             history.push("/home");
         } else {
-            console.log("tried to login but didn't worked");
+            alert("Invalid Credentials");
         }
     }   
     return <div className='container'>

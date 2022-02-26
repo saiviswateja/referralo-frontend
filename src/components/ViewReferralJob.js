@@ -3,6 +3,7 @@ import {
   useParams
 } from "react-router-dom";
 import { getReferralById } from '../api-service/ReferralService';
+import {getLoggeduser, signOut} from '../helpers/utils';
 
 function ViewReferralJob() {
   let {referral_id} = useParams();
@@ -11,7 +12,8 @@ function ViewReferralJob() {
   const [skills, setSills] = useState("");
   const [username, setUser] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  useEffect(()=> {
+
+  useEffect(()=> { 
     console.log("calling");
       async function getReferral() {
         let details = await getReferralById(referral_id);
@@ -25,7 +27,13 @@ function ViewReferralJob() {
         setUser(details.user.name);
         setUserEmail(details.user.email);
       }
-      getReferral();
+      getLoggeduser().then((user)=> {
+        if(user==null) {
+          signOut();
+          return;
+        }
+        getReferral();
+      });    
   }, []);
 
   return ( <div className="container">
