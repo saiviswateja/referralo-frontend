@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { forgotPassword } from '../api-service/UserService';
+import { forgotPassword, resetPassword } from '../api-service/UserService';
 
 function ResetPassword() {
     const [otp, setOtp] = useState("");
@@ -25,7 +25,23 @@ function ResetPassword() {
 
     const onSubmitPressed = (event) => {
         event.preventDefault();
-        
+        if(password=="" || confirmPassword==""|| otp==""||email=="") {
+            alert("Please input required details");
+            return;
+        }
+        if(password!=confirmPassword) {
+            alert("password and confirm password doesnot matched");
+            return;
+        }
+        resetPassword({
+            "otp":otp,
+            "email":email,
+            "password":password
+        })
+        .then(resposne => {
+            alert("password changed successfully");
+            window.location = "/login"
+        });
     }
 
     return (

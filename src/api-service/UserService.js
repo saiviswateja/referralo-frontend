@@ -80,3 +80,18 @@ export const forgotPassword = (email) => {
             })
     })
 }
+
+export const resetPassword = (resetInfoData) => {
+    return new Promise((resolve, reject) => {
+        console.log(resetInfoData);
+        uninterceptedAxiosInstance.post("http://localhost:8089/api/otp/reset", resetInfoData)
+            .then(res=> {
+                resolve(res.data);
+            })
+            .catch(err=> {
+                console.log(err.response);
+                alert(err.response.data.message);
+                reject({});
+            })
+    });
+}
