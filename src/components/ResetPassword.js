@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import { forgotPassword, resetPassword } from '../api-service/UserService';
+import { useParams } from "react-router-dom";
+import { resetPassword } from '../api-service/UserService';
 
 function ResetPassword() {
+    const {hash} = useParams();
     const [otp, setOtp] = useState("");
     const [email, setEmail] = useState(""); 
     const [password, setPassword] = useState("");
@@ -34,6 +36,7 @@ function ResetPassword() {
             return;
         }
         resetPassword({
+            "hash":hash,
             "otp":otp,
             "email":email,
             "password":password

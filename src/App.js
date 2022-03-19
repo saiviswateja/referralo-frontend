@@ -48,7 +48,7 @@ function App() {
           <Route exact path="/forgotpassword">
             <ForgotPassword/>
           </Route>
-          <Route exact path="/resetpassword">
+          <Route exact path="/resetpassword/:hash">
             <ResetPassword/>
           </Route>
       </Switch>
