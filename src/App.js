@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import Home from './components/Home';
 import ReferralJob from './components/ReferralJob';
@@ -14,6 +13,8 @@ import SignUpScreen from './components/SignUpScreen';
 import EditProfile from './components/EditProfile';
 import EditReferralJob from './components/EditReferralJob';
 import HomePage from './components/HomePage';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
   return (
@@ -43,6 +44,12 @@ function App() {
           </Route>
           <Route exact path="/">
             <HomePage/>
+          </Route>
+          <Route exact path="/forgotpassword">
+            <ForgotPassword/>
+          </Route>
+          <Route exact path="/resetpassword">
+            <ResetPassword/>
           </Route>
       </Switch>
     </Router>

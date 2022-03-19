@@ -5,6 +5,7 @@ import { useStateValue } from '../redux/StateProvider';
 import { useHistory } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import { signOut } from '../helpers/utils';
+import { Link } from 'react-router-dom';
 
 function LoginScreen() {
     const [state, dispatch] = useStateValue();
@@ -66,9 +67,11 @@ function LoginScreen() {
                         </div>
                     </div>
                     <button type="submit" className="btn btn-primary btn-block" onClick={submitPressed}>Submit</button>
-                    <p className="forgot-password text-right">
-                        Forgot <a href="#">password?</a>
-                    </p>
+                    <div className="forgot-password text-right">
+                        <Link to={"/forgotpassword"}>
+                            Forgot <a href="#">password?</a>
+                        </Link>
+                    </div>
                 </form></div>;
 }
 

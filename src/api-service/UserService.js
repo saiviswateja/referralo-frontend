@@ -66,3 +66,17 @@ export const getUserById = (userId) => {
         });
     });
 }
+
+export const forgotPassword = (email) => {
+    return new Promise((resolve, reject) => {
+        console.log(email);
+        uninterceptedAxiosInstance.post("http://localhost:8089/api/otp/forgotpassword", email)
+            .then(res=> {
+                resolve(res.data);
+            }).catch(err=> {
+                console.log(err.response);
+                alert(err.response.data.message);
+                reject({})
+            })
+    })
+}
