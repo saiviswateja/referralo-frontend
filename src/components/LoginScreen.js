@@ -15,7 +15,6 @@ function LoginScreen() {
     const cookie = new Cookies();
 
     useState(()=> {
-        console.log(process.env.REACT_APP_REFERRALO_URL);
         let userDetails = cookie.get('loggedUser');
         let accessToken = cookie.get('token');
         if (userDetails!=null && accessToken!=null) {
