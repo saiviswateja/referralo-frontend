@@ -2,10 +2,12 @@ import axios from 'axios';
 
 const uninterceptedAxiosInstance = axios.create();
 
+const referraloBaseUrl = process.env.REACT_APP_REFERRALO_URL;
+
 export const login = (loginInformation) => {
     return new Promise((resolve, reject)=>{
         console.log(loginInformation);
-        uninterceptedAxiosInstance.post("http://localhost:8089/authenticate", loginInformation)
+        uninterceptedAxiosInstance.post(referraloBaseUrl+"/authenticate", loginInformation)
         .then((res)=>{
             console.log("tried to authenticate");
             console.log(res.data);
@@ -21,7 +23,7 @@ export const login = (loginInformation) => {
 
 export const createUser = (userInformation) => {
     return new Promise((resolve, reject)=>{
-        uninterceptedAxiosInstance.post("http://localhost:8089/api/user", userInformation)
+        uninterceptedAxiosInstance.post(referraloBaseUrl+"/api/user", userInformation)
         .then((res)=>{
             console.log("tried to save user");
             console.log(res.data);
@@ -37,7 +39,7 @@ export const createUser = (userInformation) => {
 
 export const updateUser = (userInformation) => {
     return new Promise((resolve, reject)=>{
-        axios.put("http://localhost:8089/api/user/update", userInformation)
+        axios.put(referraloBaseUrl+"/api/user/update", userInformation)
         .then((res)=>{
             console.log("tried to update user");
             resolve(res.data);
@@ -53,7 +55,7 @@ export const updateUser = (userInformation) => {
 export const getUserById = (userId) => {
     return new Promise((resolve, reject)=>{
         console.log(userId);
-        axios.get("http://localhost:8089/api/user/userid/"+userId)
+        axios.get(referraloBaseUrl+"/api/user/userid/"+userId)
         .then((res)=>{
             console.log("tried to get user");
             console.log(res.data);
@@ -70,7 +72,7 @@ export const getUserById = (userId) => {
 export const forgotPassword = (email) => {
     return new Promise((resolve, reject) => {
         console.log(email);
-        uninterceptedAxiosInstance.post("http://localhost:8089/api/otp/forgotpassword", email)
+        uninterceptedAxiosInstance.post(referraloBaseUrl+"/api/otp/forgotpassword", email)
             .then(res=> {
                 resolve(res.data);
             }).catch(err=> {
@@ -84,7 +86,7 @@ export const forgotPassword = (email) => {
 export const resetPassword = (resetInfoData) => {
     return new Promise((resolve, reject) => {
         console.log(resetInfoData);
-        uninterceptedAxiosInstance.post("http://localhost:8089/api/otp/reset", resetInfoData)
+        uninterceptedAxiosInstance.post(referraloBaseUrl+"/api/otp/reset", resetInfoData)
             .then(res=> {
                 resolve(res.data);
             })

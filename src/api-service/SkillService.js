@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getSkills = () => {
     return new Promise((resolve, reject)=>{
-        axios.get("http://localhost:8089/api/skill")
+        axios.get(process.env.REACT_APP_REFERRALO_URL+"/api/skill")
         .then((res)=>{
             console.log("tried to get skills");
             console.log(res.data);
