@@ -175,3 +175,7 @@ body, html, .App, #root, .auth-wrapper {
   color: #2b6777;
   font-weight: bold;
 }
+
+.user_referral_details {
+  margin-top: 3%;
+}
